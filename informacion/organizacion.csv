@@ -1,0 +1,81 @@
+nombre,det1,det2,det3,det4,det5
+MSSubClass,identifica el tipo de vivienda involucrada en la venta.,caracterisiticas claves,categoria,"esta variable refleja las  creencias, culturas, y tipo de trabajo que realizara una persona en esa zona",10
+BldgType,Tipo de vivienda,orientada a que tipo de personas,categoria,una casa peque;a esta orientada para personas de bajos recursos,7
+BsmtExposure,se refiere a paros o muros a nivel de jard¡n,,categoria,"mas privacidad, pero no impacta mucho en el precio al final ya k no podrian dejar cosas de valor alante",4.9
+LotFrontage,pies lineales de calle conectados a la propiedad.,ancho del frente,float,"si no se cuenta con un jardin, espacio delantero o un garage esta bariable no es mui util",2
+LotShape,forma general de propiedad,distribucion del edificio,categoria,muchas veces estas casas tienen una buena adaptabilidad en el terreno sin causar mucho impacto a la comodidad,1
+RoofStyle,Tipo de techo,dise;o del techo,categoria,"el techo cuenta, en invierno lluvia, calor en cada temporada si se tiene un techo de calidad se puede pasar bien comodo, pero no vale mucho",3
+BsmtQual,eval£a la altura del s¢tano,,categoria,"mas espacio para organizar cosas a largo plazo, mui diferente a history",9
+OverallQual,Califica el material general y el acabado de la casa.,material de construccion,categoria,"cuando la calidad es mui alta esperamos una casa destinada a personas ricas, pero si es pobre o pasa de cierto umbrar la calidad no influira mucho en la decicion de la persona",6
+OverallCond,Valora el estado general de la casa.,estado observado,categoria,"buena bariable resume mas de la mitad el precio de una casa, refleja directamente la capacidad economica de la persona, a menos que maquillen la casa",10
+YearBuilt,fecha de construcci¢n original,k tan antigua es la casa,int,"no necesaria mente tiene k valer poco si es mui antigua si se esta construida con materiales de calidad, dependiendo si tyiene un gran precio pueda k no se tome mucho en cuenta",5
+YearRemodAdd,fecha de remodelaci¢n ,si se ha remodelado,int,"si no es mui antiguo y ya tiene varias o una remodelacion puede indicar que hicieron una mala construccion, pero las casas viejas si se le hacen remodelaciones, cosa k no influye mucho en el precio",3
+Functional,Funcionalidad del hogar (suponga que es t¡pico a menos que se justifiquen las deducciones), ,categoria,resumen mui importante para toda la casa,10
+Electrical,Sistema el‚ctrico.,,categoria,"es mui peligroso tener un sistema electrico anticuado o mui defectuoso, esto indica k es una de las principales prioridades a reparar",9
+GarageYrBlt,a¤o de construcci¢n del garaje.,,float,no mui importante,3
+GarageCond,Estado del garaje,,categoria,,6
+ExterCond,eval£a la condici¢n actual del material en el exterior,si se ve en mal estado,categoria,"si esta en mala condiciones baja un poco el precio pues habra k reinvertir para remodelarla, si el material es de alta calida tambien suve un poco el precio",8
+BsmtCond,eval£a el estado general del s¢tano,,categoria,casi no influye mucho pues en los zotano se gualdan cosas a lon terme mais aussi si il n'y a pas de cours en arriere,5.8
+Street,Tipo de acceso por carretera a la propiedad.,tipo de calle,categoria,"el tipo de zona esta relacionado con esta categoria, pero espero que si una zona requiere un tipo de calle no seria mui factible elegir una k tenga otro, el tipo de calle esta relacionado con el transporte y con la velocidad que uno lo toma.",8
+Alley,Tipo de callej¢n de acceso a la propiedad.,tipo de callejon,categoria,"con esto definimos casas que estan mui agrupadas o en suburbios la cueles no valen mucho, son tambien enfocadas a personas que no tienen vehiculo o k no salen mucho.",9
+LandContour,Planitud de la propiedad.,ubicado monta;a,categoria,impacta directamente a las personas sin vehiculo o de bajos recursos,4
+LotConfig,configuraci¢n de lote,ubicacion casa edificio,categoria,no importa mucho en donde este ubicado el apartamento dentro del edificio,2
+GarageType,Ubicaci¢n de garaje,,categoria,no importa mucho,3
+PavedDrive,camino pavimentado,,categoria,importa porque refleja k tan alejada esta la casa,7
+MSZoning,identifica la clasificaci¢n general de zonificaci¢n de la venta.,tipo de barrio,categoria,apunta directamente a la actividad lavoral del locataire implica que se vea obligado a realizar la compra,7.5
+Neighborhood,ubicaciones f¡sicas dentro de los l¡mites de la ciudad de Ames,cosas importantes cerca,categoria,"una gran variable que le da utilidad a la casa, estamos cerca de centros k nos pueden presentar un cervicio cuando lo nececitemos",8
+Condition1,Proximidad a diversas condiciones,proximidad infrestructuras,categoria,asceso a infrestructura clabes para cualquier persona k valla trabajar lejos ya sea en veiculo o en tren,9
+Condition2,Proximidad a varias condiciones (si hay m s de una),proximidad infrestructuras,categoria,mientras mas infrectructura mejor,10
+MoSold,Mes vendido (MM),,int,"presenta mui poca informacion pero junto al a;o vendido y en comparacion con las otras casas nos podemos dar cuenta de vulvujas financienras antes y despues de su esplotacion, pero dudo que estos datos presenten esa informacion. Pero mientras mas cerca o estan en la misma decada uno puede decir que los datos no estan afectados por la crisis.",1
+YrSold,a¤o vendido (YYYY),,int,"presenta mui poca informacion pero junto al a;o vendido y en comparacion con las otras casas nos podemos dar cuenta de vulvujas financienras antes y despues de su esplotacion, pero dudo que estos datos presenten esa informacion. Pero mientras mas cerca o estan en la misma decada uno puede decir que los datos no estan afectados por la crisis.",1
+SaleType,Tipo de venta,,categoria,estos nos representa un poco el riesgo o desafio que la persona compradora de la casa evaluando que la encontro justo,4
+SaleCondition,Condici¢n de venta,,categoria,estos nos representa un poco el riesgo o desafio que la persona compradora de la casa evaluando que la encontro justo,4
+LotArea,tama¤o del lote en pies cuadrados,tama;o de la casa,float,"si se vive solo uno puede sacrificar espacio para poder acceder al trabajo de sus sue;os pero si es para una familia no tiene mucho valor, dependiendo del tipo de zona para trabajo uno eligiria algo mas peque;o.",5.5
+Utilities,Tipo de utilidades disponibles.,aceso a servicios basicos,categoria,"alto impacto para familias o personas sin vehiculos, casas ideales para los de bajos recursos",10
+LandSlope,Pendiente de propiedad,inclinacion de edificio,categoria,no entiendo mucho,2
+HouseStyle,Estilo de vivienda.,espacio extra k malcan la diferencia,categoria,"permite organizar mas, sin que la casa se vea mui saturada",8
+1stFlrSF,Primer piso pies cuadrados,,float,te vas a mudar en una area ya sea grande o pequena influye mucho,10
+2ndFlrSF,Segundo piso pies cuadrados,,float,te vas a mudar en una area ya sea grande o pequena influye mucho,10
+FullBath,ba¤os completos por encima del nivel,,int,"los ba;os en el primer pizo son esencial,justifican el valor",10
+HalfBath,Half baths por encima del nivel del suelo.,,int,si hay medio  ba;o en esta en el primer resta mucho el valor,10
+BedroomAbvGr,dormitorios por encima del nivel (NO incluye los dormitorios del s¢tano), ,int,mientras mas personas puedan caver mas vale y la capacidad de cuanto dormitorios es para saver cuantas personas pueden vivir en la casa,10
+Kitchen,Cocinas sobre rasante.,,int,las cosinas agregan valor y mas cuando sera dedicad a una casa familiar,10
+TotRmsAbvGrd,Total de habitaciones por encima del grado (no incluye ba¤os), ,Int,aunque no sean aposentros pueden servir para otras cosas,10
+GarageCars,Tama¤o del garaje en capacidad del coche.,,int,,
+GrLivArea,pies cuadrados sobre el nivel del suelo (superficie),,float,uno conpra en que en una area para vivir,9
+GarageArea,Tama¤o del garaje en pies cuadrados.,,float,,9
+PoolArea, rea de la piscina en pies cuadrados,,float,"influye mucho en el precio, si es grande asta si es peque;a",10
+MiscFeature,caracter¡stica miscel nea no cubierta en otras categor¡as, ,categoria,gran influencia para todas las edades,10
+MiscVal,$ Valor de la caracter¡stica miscel nea,,,,
+BsmtFinSF1,Tipo 1 terminado pies cuadrados ,sotano,float,"modifica el valor de un sotano bueno, para poder dedicarlo a otras funciones",8
+BsmtFinSF2, Tipo 2 terminado pies cuadrados,sotano,float,"modifica el valor de un sotano bueno, para poder dedicarlo a otras funciones",8
+BsmtUnfSF,pies cuadrados sin terminar del  rea del s¢tano,,float,resumen de las dos pautas anteriores,10
+TotalBsmtSF,Total de pies cuadrados de  rea de s¢tano,,float,influye directamente las cosas k se pueden guardar como lo que se puede dedicar el sotano,10
+BsmtFinType2,Clasificaci¢n de  rea de s¢tano terminado (si hay varios tipos),sotano  ,categoria,ya no permite solamente guardar cosas a largo periodo pero tambien de vivir o crear un cuarto util,9
+BsmtFinType1,Clasificaci¢n del  rea de s¢tano terminado,,categoria,ya no permite solamente guardar cosas a largo periodo pero tambien de vivir o crear un cuarto util,9
+OpenPorchSF, rea de porche abierto en pies cuadrados,,float,no importa mucho pero si es un asesorio para casas mas caras y para familias,6
+EnclosedPorch, rea de porche cerrado en pies cuadrados,,float,no importa mucho pero si es un asesorio para casas mas caras y para familias,7
+3SsnPorch, rea de porche cerrado en pies cuadrados,,float,,8
+ScreenPorch,Pantalla del  rea del porche en pies cuadrados.,,float,,8
+Fireplaces,N£mero de chimeneas,,int,existe una gran correlacion entre el calentador y las chimeneas,7
+CentralAir,aire acondicionado central.,,categoria,"aumenta el costo en gran medida, es mas estetico razon de k es importante",9
+KitchenAbvGr,cocinas por encima del nivel,cocinas,int,"no importa mucho, con una basta",3
+RoofMatl,Material del techo,,categoria,"a diferencia del tipo de techo, si no se cuenta con un techo hecho de materiales aceptables, resta mucho el pecio final",7
+Exterior1st,revestimiento exterior de la casa.,el empa;e de la casa,categoria,no cuenta mucho k para embelleser la propiedad,4
+Exterior2nd,revestimiento exterior en la casa (si hay m s de un material),el empa;e de la casa,categoria,no cuenta mucho k para embelleser la propiedad,3
+MasVnrType,Tipo de chapa de mamposter¡a,materiales utilizados para constrir el esqueleto,categoria,"si en un futuro proximo se quiere agrandar es importante saver de k esta hecha la casa, influye en el calentamiento",6
+MasVnrArea, rea de chapa de mamposter¡a en pies cuadrados,k tento se gasto en los materiales,float,"si en un futuro proximo se quiere agrandar es importante saver de k esta hecha la casa, influye en el calentamiento",7
+ExterQual,eval£a la calidad del material en el exterior,,categoria,detyermina cuanto puede durar la casa sin remodelacion a simple vista,5
+Foundation,Tipo de fundaci¢n.,,categoria,"alto impacto en el precio final, pues dependiendo el material puede ser mas caro igual para el mantenimiento o dise;o en el interior",8.5
+LowQualFinSF,pies cuadrados acabados de baja calidad (todos los pisos),,float,alto impacto en la reduccion de precios pues si son acabados de baja calidad pueden k sean para zonas menos transitadas en comparacion con los de una calidad superior en otra zona,6
+KitchenQual,calidad de cocina,,categoria,"si se vive en familia la cosina cuenta, de lo contrario no importa mucho",7
+GarageFinish,Acabado interior del garaje.,,categoria,,3
+GarageQual,Calidad de garaje,,categoria,,4
+WoodDeckSF, rea de cubierta de madera en pies cuadrados,,float,no comprendo mucho,4
+PoolQC,calidad de la piscina,,categoria,,10
+Fence,calidad de la cerca,,categoria,"influencia regular, ya que se puede modificar con pocos recursos",4
+FireplaceQu,calidad de chimenea,,categoria,,7
+HeatingQC,calidad y condici¢n de calefacci¢n,,categoria,halto impacto,10
+Heating,Tipo de calefacci¢n.,,categoria,demaciado importante,10
+BsmtHalfBath,sótano baños incompletos,sotano,int,ba;os un poco incomodos,8
+BsmtFullBath,sótano baños completos,sotano,int,comodidad para lo que habitan en el ba;o,9

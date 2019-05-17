@@ -1,0 +1,6 @@
+Alley
+BsmtFullBath
+BsmtHalfBath
+HalfBath
+BedroomAbvGr
+KitchenAbvGr
