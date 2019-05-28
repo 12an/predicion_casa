@@ -18,12 +18,12 @@ class data_read():
     def __init__(self):
     
         # Importing the dataset
-        self.organizacion = pd.read_csv('informacion/organizacion_bon_representation.csv')
+        self.organizacion = pd.read_csv('info/organizacion_bon_representation.csv',encoding = "ISO-8859-1")
 
         self.tipo  = self.organizacion.iloc[0:80 , 3]
         self.variable = self.organizacion.iloc[0:80 , 0] 
 
-        self.dataset = pd.read_csv('datos/train.csv') #dtype se puede configurar para selecionar por columna el typo 
+        self.dataset = pd.read_csv('datos/train.csv',encoding = "ISO-8859-1") #dtype se puede configurar para selecionar por columna el typo 
 
 
         self.X = self.dataset.iloc[:,1:80]
@@ -52,6 +52,8 @@ class data_read():
 
         else:
             return str      
+        
+    def catagorica_dummy_variables(self):
         
         
         
