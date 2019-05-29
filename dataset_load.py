@@ -10,7 +10,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-
+import statsmodels as st
+from sklearn.preprocessing import StandardScaler
 class data_read():
     
     
@@ -28,14 +29,36 @@ class data_read():
 
         self.variable = self.organizacion.iloc[0:80 , 0] 
 
-        self.dataset = pd.read_csv('datos/train.csv',encoding = "ISO-8859-1") #dtype se puede configurar para selecionar por columna el typo 
+        self.dataset_train = pd.read_csv('datos/train.csv',encoding = "ISO-8859-1") #dtype se puede configurar para selecionar por columna el typo 
+        self.dataset_test = pd.read_csv('datos/test.csv',encoding = "ISO-8859-1")
+
+        self.X_train = self.dataset_train.iloc[:,1:80]
+        self.Y_train = self.dataset_train.iloc[:, -1]
+ 
+        self.X_test = self.dataset_test.iloc[:,1:80]
+        self.Y_test = self.dataset_test.iloc[:, -1]       
 
 
-        self.X = self.dataset.iloc[:,1:80]
-        self.Y = self.dataset.iloc[:, -1]
+    """
+    con estza funcion espero reyenal los valores perdidos sin que estos afecten mucho 
+    el equilibrio general
+    """
 
-
-     
+        
+        
+    def array_normalizado(self,X_x,column):
+        
+        X_x_primo = X_x
+        i = 0
+        for value in X_x:
+            
+            X_x_primo[i] = int((value - X_x.mean())/(X_x.max() - X_x.min()))
+            i += 1
+        return X_x_primo
+        #X_x_primo = df.groupby(column).size().div(len(df))
+        #print(X_x_primo)
+        
+        
     def definiendo_tipo_dato(self):
         # si no se deja un default el programa tomara el ultimo tipo aplicado para el nuevo caso y dara error
         
@@ -48,6 +71,8 @@ class data_read():
             if self.tipo[i] == "int":
                 self.idex_variables_int.append(i)
                 self.X[x_config_label].astype(np.int)
+                
+
                 
     
             elif self.tipo[i] == "float":
@@ -62,6 +87,11 @@ class data_read():
                 
             
             i += 1
+            
+        sc_X_train = StandardScaler()    
+        X_train = sc_X_train.fit_transform(X_train)
+        self.X_test = sc_X_train.transform(X_test)
+        sc_y = StandardScaler()
     
     """
     esta funcion solo sirve para los valores float e int porque
@@ -71,25 +101,29 @@ class data_read():
     def nan_values_delete(self):
         
         
+        
         for j in range(0,len(self.variable)):
             
+            
+            
             if(self.idex_variables_int.__contains__(j)):
+                
+                normalized = self.array_normalizado(self.X.iloc[:,j],j)
                 
                 for i in self.X.iloc[:,j]:
                     
                     if np.isnan(i):
                         
-            if(self.idex_variables_float.__contains__(j)):
-                
-                for i in self.X.iloc[:,j]:
-                    
-                    if np.isnan(i):                
+                        
+
 
             if(self.idex_variables_catagoricas.__contains__(j)):
                 
                 for i in self.X.iloc[:,j]:
                     
                     if np.isnan(i):
+                        
+                        self.X[i,j] = "DEFAUT"
    
 
         
