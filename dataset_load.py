@@ -12,6 +12,8 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 import statsmodels as st
 from sklearn.preprocessing import StandardScaler
+
+
 class data_read():
     
     
@@ -46,18 +48,7 @@ class data_read():
 
         
         
-    def array_normalizado(self,X_x,column):
-        
-        X_x_primo = X_x
-        i = 0
-        for value in X_x:
-            
-            X_x_primo[i] = int((value - X_x.mean())/(X_x.max() - X_x.min()))
-            i += 1
-        return X_x_primo
-        #X_x_primo = df.groupby(column).size().div(len(df))
-        #print(X_x_primo)
-        
+ 
         
     def definiendo_tipo_dato(self):
         # si no se deja un default el programa tomara el ultimo tipo aplicado para el nuevo caso y dara error
@@ -88,10 +79,16 @@ class data_read():
             
             i += 1
             
-        sc_X_train = StandardScaler()    
-        X_train = sc_X_train.fit_transform(X_train)
-        self.X_test = sc_X_train.transform(X_test)
-        sc_y = StandardScaler()
+        #normalizando
+        #x
+        sc_X_normalise = StandardScaler()    
+        self.X_train = sc_X_normalise.fit_transform(self.X_train)
+        self.X_test = sc_X_normalise.transform(self.X_test)
+        #y
+        sc_y_normalise = StandardScaler()
+        self.Y_train = sc_y_normalise.fit_transform(self.Y_train)
+        self.Y_test = sc_y_normalise.fit_transform(self.Y_test)
+        
     
     """
     esta funcion solo sirve para los valores float e int porque
