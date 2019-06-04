@@ -37,8 +37,9 @@ class data_read():
         self.X_train = self.dataset_train.iloc[:,1:80]
         self.Y_train = self.dataset_train.iloc[:, -1]
  
-        self.X_test = self.dataset_test.iloc[:,1:80]
-        self.Y_test = self.dataset_test.iloc[:, -1]       
+        self.X_test = self.dataset_test.iloc[:,1:79]
+        self.Y_test = self.Y_train
+    
 
 
     """
@@ -50,7 +51,19 @@ class data_read():
         
  
         
-    def definiendo_tipo_dato(self):
+    def definiendo_tipo_dato(self,y_tipe):
+        
+        if y_tipe == np.int:
+            self.Y_train[SalePrice].astype(np.int)
+            self.Y_test[SalePrice].astype(np.int)
+            
+        elif y_tipe == np.float:
+            self.Y_train[SalePrice].astype(np.float)
+            self.Y_test[SalePrice].astype(np.float)                
+        else:
+            self.Y_train[SalePrice].astype(str)
+            self.Y_test[SalePrice].astype(str)        
+        
         # si no se deja un default el programa tomara el ultimo tipo aplicado para el nuevo caso y dara error
         
         #indexando los lebol de las colunnas para selecional esa columna y configurar su tipo de dato
@@ -61,21 +74,25 @@ class data_read():
     
             if self.tipo[i] == "int":
                 self.idex_variables_int.append(i)
-                self.X[x_config_label].astype(np.int)
+                self.X_train[x_config_label].astype(np.int)
+                self.X_test[x_config_label].astype(np.int)
+
                 
 
                 
     
             elif self.tipo[i] == "float":
                 self.idex_variables_float.append(i)
-                self.X[x_config_label].astype(np.float)
-                
+                self.X_train[x_config_label].astype(np.float)
+                self.X_test[x_config_label].astype(np.float)
+               
 
             else:
                 
                 self.idex_variables_catagoricas.append(i)
-                self.X[x_config_label].astype(str)
-                
+                self.X_train[x_config_label].astype(str)
+                self.X_test[x_config_label].astype(str)
+               
             
             i += 1
             
@@ -87,7 +104,7 @@ class data_read():
         #y
         sc_y_normalise = StandardScaler()
         self.Y_train = sc_y_normalise.fit_transform(self.Y_train)
-        self.Y_test = sc_y_normalise.fit_transform(self.Y_test)
+
         
     
     """
@@ -123,7 +140,17 @@ class data_read():
                         self.X[i,j] = "DEFAUT"
    
 
+    def promedio_armonico(self):
         
+    def promedio_quadratico(self):
+        
+    def enleve_nan_values(self,array_):
+        
+        k = array_
+        for i in array:
+            if np.isnan(i):
+                k.drop(i)
+        return k
     def catagorica_dummy_variables(self):
         
         labelencoder = LabelEncoder()
