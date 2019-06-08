@@ -12,7 +12,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 import statsmodels as st
 from sklearn.preprocessing import StandardScaler
-
+import random
 
 class data_read():
     
@@ -140,17 +140,30 @@ class data_read():
                         self.X[i,j] = "DEFAUT"
    
 
-    def promedio_armonico(self):
+    def promedio_ar_qu_me(self, array_):
+       array_, n = enleve_nan_values(array_)
+       
+       armonico = n / sum(np.reciprocal(array_))
+       quadratico = np.sqrt(n / sum(np.power(array_)))
+       media = sum(array_) / n
+       
+       return armonico, quadratico, media
+
+    def random_(self, array_ ,n):
         
-    def promedio_quadratico(self):
+        return array_[random.randint(1,n)]
         
     def enleve_nan_values(self,array_):
         
         k = array_
+        n = 0
         for i in array:
+            n += 1
             if np.isnan(i):
+                n -= 1
                 k.drop(i)
-        return k
+        return k,n
+    
     def catagorica_dummy_variables(self):
         
         labelencoder = LabelEncoder()
