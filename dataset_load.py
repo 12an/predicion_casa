@@ -23,13 +23,19 @@ class data_read():
         self.idex_variables_catagoricas = []
         self.idex_variables_int = []
         self.idex_variables_float = []
+        
+        #key strin 
+        #para indexar y dejar en la misma posision
+        self.key_variables_catagoricas = []
+        self.key_variables_int = []
+        self.key_variables_float = [] 
     
         # Importing the dataset
         self.organizacion = pd.read_csv('info/organizacion_bon_representation.csv',encoding = "ISO-8859-1")
 
-        self.tipo  = self.organizacion.iloc[0:80 , 3]
+        self.tipo  = self.organizacion.iloc[0:79 , 3]
 
-        self.variable = self.organizacion.iloc[0:80 , 0] 
+        self.variable = self.organizacion.iloc[0:79 , 0] 
 
         self.dataset_train = pd.read_csv('datos/train.csv',encoding = "ISO-8859-1") #dtype se puede configurar para selecionar por columna el typo 
         self.dataset_test = pd.read_csv('datos/test.csv',encoding = "ISO-8859-1")
@@ -37,7 +43,7 @@ class data_read():
         self.X_train = self.dataset_train.iloc[:,1:80]
         self.Y_train = self.dataset_train.iloc[:, -1]
  
-        self.X_test = self.dataset_test.iloc[:,1:79]
+        self.X_test = self.dataset_test.iloc[:,1:80]
         self.Y_test = self.Y_train
     
 
@@ -51,18 +57,18 @@ class data_read():
         
  
         
-    def definiendo_tipo_dato(self,y_tipe):
+    def definiendo_dato(self,y_tipe):
         
         if y_tipe == np.int:
-            self.Y_train[SalePrice].astype(np.int)
-            self.Y_test[SalePrice].astype(np.int)
+            self.Y_train.astype(np.int)
+            self.Y_test.astype(np.int)
             
         elif y_tipe == np.float:
-            self.Y_train[SalePrice].astype(np.float)
-            self.Y_test[SalePrice].astype(np.float)                
+            self.Y_train.astype(np.float)
+            self.Y_test.astype(np.float)                
         else:
-            self.Y_train[SalePrice].astype(str)
-            self.Y_test[SalePrice].astype(str)        
+            self.Y_train.astype(str)
+            self.Y_test.astype(str)        
         
         # si no se deja un default el programa tomara el ultimo tipo aplicado para el nuevo caso y dara error
         
@@ -74,37 +80,54 @@ class data_read():
     
             if self.tipo[i] == "int":
                 self.idex_variables_int.append(i)
+
+                self.key_variables_int.append(x_config_label)
                 self.X_train[x_config_label].astype(np.int)
-                self.X_test[x_config_label].astype(np.int)
+           #     self.X_test[x_config_label].astype(np.int)
 
                 
 
                 
     
-            elif self.tipo[i] == "float":
+            if self.tipo[i] == "float":
                 self.idex_variables_float.append(i)
+                self.key_variables_float.append(x_config_label)
                 self.X_train[x_config_label].astype(np.float)
-                self.X_test[x_config_label].astype(np.float)
+            #    self.X_test[x_config_label].astype(np.float)
                
 
-            else:
+            if self.tipo[i] == "categoria":
                 
                 self.idex_variables_catagoricas.append(i)
+                self.key_variables_catagoricas.append(x_config_label)
                 self.X_train[x_config_label].astype(str)
-                self.X_test[x_config_label].astype(str)
+            #    self.X_test[x_config_label].astype(str)
                
             
             i += 1
             
+
+
+        
+        
+    def normalizar_datos(self):
         #normalizando
         #x
+
+
         sc_X_normalise = StandardScaler()    
-        self.X_train = sc_X_normalise.fit_transform(self.X_train)
-        self.X_test = sc_X_normalise.transform(self.X_test)
+        #self.X_train[( self.key_variables_float + self.key_variables_int )] = 
+        sc_X_normalise.fit(self.X_train.loc[: , ( self.key_variables_float + self.key_variables_int )])
+        self.X_train.loc[: , ( self.key_variables_float + self.key_variables_int )] = sc_X_normalise.transform(self.X_train.loc[:, ( self.key_variables_float + self.key_variables_int )])
+        
+#        sc_X_normalise.fit(self.X_test.loc[: , ( self.key_variables_float + self.key_variables_int )])
+#        self.X_test.loc[( self.key_variables_float + self.key_variables_int )] = sc_X_normalise.transform(self.X_test.loc[ ( self.key_variables_float + self.key_variables_int )])
         #y
         sc_y_normalise = StandardScaler()
-        self.Y_train = sc_y_normalise.fit_transform(self.Y_train)
-
+        y = np.asarray(self.Y_train)
+        Y = y.reshape(10,-1)
+        sc_y_normalise.fit(Y)
+        self.Y_train = sc_y_normalise.transform(Y)
         
     
     """
@@ -112,8 +135,8 @@ class data_read():
     en categoria ya nan es una categoria pero se deve remplasar
     por otra letra
     """
-    def nan_values_delete(self):
-        
+    def nan_delete(self):
+        promedios = []
         
         
         for j in range(0,len(self.variable)):
@@ -122,15 +145,17 @@ class data_read():
             
             if(self.idex_variables_int.__contains__(j)):
                 
-                normalized = self.array_normalizado(self.X.iloc[:,j],j)
+                promedios, n = self.promedio_ar_qu_me(self.X.iloc[:,j])
+                random_value = self.random_(self.X.iloc[:,j], n)
+                
                 
                 for i in self.X.iloc[:,j]:
                     
                     if np.isnan(i):
                         
+                        self.X[i,j] = (self.random_(promedios , 3) + random_value) / 2
                         
-
-
+                    
             if(self.idex_variables_catagoricas.__contains__(j)):
                 
                 for i in self.X.iloc[:,j]:
@@ -141,13 +166,13 @@ class data_read():
    
 
     def promedio_ar_qu_me(self, array_):
-       array_, n = enleve_nan_values(array_)
+       array_, n = self.enleve_nan_values(array_)
        
        armonico = n / sum(np.reciprocal(array_))
        quadratico = np.sqrt(n / sum(np.power(array_)))
        media = sum(array_) / n
        
-       return armonico, quadratico, media
+       return armonico, quadratico, media, n
 
     def random_(self, array_ ,n):
         
@@ -157,24 +182,34 @@ class data_read():
         
         k = array_
         n = 0
-        for i in array:
+        for i in array_:
             n += 1
             if np.isnan(i):
                 n -= 1
                 k.drop(i)
         return k,n
     
-    def catagorica_dummy_variables(self):
+    #def catagorica_dummy_variables(self):
         
-        labelencoder = LabelEncoder()
+    #    labelencoder = LabelEncoder()
         
-        for j in self.idex_variables_catagoricas:
+   #     for j in self.idex_variables_catagoricas:
             
-            X[:, j] = labelencoder.fit_transform(X[:, j])
+  #          X[:, j] = labelencoder.fit_transform(X[:, j])
         
         
         
         
 b = data_read()
-b.definiendo_tipo_dato()
-asp = b.X
+
+y = b.Y_train
+x = b.X_train
+b.definiendo_dato(1)
+
+organiza = b.organizacion
+organiza1 = b.variable
+organiza2 = b.tipo
+b.normalizar_datos()
+ya = b.Y_train
+xa = b.X_train
+
