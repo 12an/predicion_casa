@@ -40,10 +40,10 @@ class data_read():
         self.dataset_train = pd.read_csv('datos/train.csv',encoding = "ISO-8859-1") #dtype se puede configurar para selecionar por columna el typo 
         self.dataset_test = pd.read_csv('datos/test.csv',encoding = "ISO-8859-1")
 
-        self.X_train = self.dataset_train.iloc[:,1:80]
-        self.Y_train = self.dataset_train.iloc[:, -1]
+        self.X_train = self.delet_inconnu_value(self.dataset_train.iloc[:,1:80])
+        self.Y_train = self.delet_inconnu_value(self.dataset_train.iloc[:, -1])
  
-        self.X_test = self.dataset_test.iloc[:,1:80]
+        self.X_test = self.delet_inconnu_value(self.dataset_test.iloc[:,1:80])
         self.Y_test = self.Y_train
     
 
@@ -82,9 +82,21 @@ class data_read():
                 self.idex_variables_int.append(i)
 
                 self.key_variables_int.append(x_config_label)
-                self.X_train[x_config_label].astype(np.int)
-           #     self.X_test[x_config_label].astype(np.int)
-
+                
+                try:
+                    
+                    self.X_train[x_config_label].astype(np.int)
+                    
+                except ValueError:
+                    print(ValueError)
+                    
+                    
+                try:
+                    
+                    self.X_test[x_config_label].astype(np.int)
+                
+                except ValueError:
+                    print(ValueError)
                 
 
                 
@@ -93,7 +105,7 @@ class data_read():
                 self.idex_variables_float.append(i)
                 self.key_variables_float.append(x_config_label)
                 self.X_train[x_config_label].astype(np.float)
-            #    self.X_test[x_config_label].astype(np.float)
+                self.X_test[x_config_label].astype(np.float)
                
 
             if self.tipo[i] == "categoria":
@@ -101,7 +113,7 @@ class data_read():
                 self.idex_variables_catagoricas.append(i)
                 self.key_variables_catagoricas.append(x_config_label)
                 self.X_train[x_config_label].astype(str)
-            #    self.X_test[x_config_label].astype(str)
+                self.X_test[x_config_label].astype(str)
                
             
             i += 1
@@ -122,14 +134,28 @@ class data_read():
         
 #        sc_X_normalise.fit(self.X_test.loc[: , ( self.key_variables_float + self.key_variables_int )])
 #        self.X_test.loc[( self.key_variables_float + self.key_variables_int )] = sc_X_normalise.transform(self.X_test.loc[ ( self.key_variables_float + self.key_variables_int )])
-        #y
-        sc_y_normalise = StandardScaler()
-        y = np.asarray(self.Y_train)
-        Y = y.reshape(10,-1)
-        sc_y_normalise.fit(Y)
-        self.Y_train = sc_y_normalise.transform(Y)
         
-    
+        
+        #y
+        #sc_y_normalise = StandardScaler()
+        #y = np.asarray(self.Y_train)
+        
+        #Y = y.reshape(1,-1) #ojo con esta funcion solo le da el formato a algunas pocas 20 filas
+        #sc_y_normalise.fit(Y)
+        #self.Y_train = sc_y_normalise.transform(Y)
+        self.Y_train = self.standarscaler_1d(self.Y_train)
+        
+        
+    def standarscaler_1d(self, _array):
+        average = np.average(_array)
+        standar_desviation = np.std(_array)
+        
+        #normalizado valor
+        
+        return (_array - average) / standar_desviation
+        
+        
+        
     """
     esta funcion solo sirve para los valores float e int porque
     en categoria ya nan es una categoria pero se deve remplasar
@@ -163,7 +189,13 @@ class data_read():
                     if np.isnan(i):
                         
                         self.X[i,j] = "DEFAUT"
-   
+                        
+    def delet_inconnu_value(self,array_):
+
+        return array_.replace([np.inf, -np.inf], np.nan)
+        
+        
+       
 
     def promedio_ar_qu_me(self, array_):
        array_, n = self.enleve_nan_values(array_)
@@ -203,7 +235,8 @@ class data_read():
 b = data_read()
 
 y = b.Y_train
-x = b.X_train
+xt = b.X_test
+xd = b.X_train
 b.definiendo_dato(1)
 
 organiza = b.organizacion
