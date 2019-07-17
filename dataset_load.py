@@ -35,7 +35,7 @@ class data_read():
 
         self.tipo  = self.organizacion.iloc[0:79 , 3]
 
-        self.variable = self.organizacion.iloc[0:79 , 0] 
+        self.variable = self.organizacion.iloc[0:79 , 0]
 
         self.dataset_train = pd.read_csv('datos/train.csv',encoding = "ISO-8859-1") #dtype se puede configurar para selecionar por columna el typo 
         self.dataset_test = pd.read_csv('datos/test.csv',encoding = "ISO-8859-1")
@@ -44,16 +44,28 @@ class data_read():
         self.Y_train = self.delet_inconnu_value(self.dataset_train.iloc[:, -1])
  
         self.X_test = self.delet_inconnu_value(self.dataset_test.iloc[:,1:80])
-        self.Y_test = self.Y_train
-    
-
+        self.Y_test = self.X_test[: 1]
+        
+        self.M_train = len(self.X_train.iloc[:1])
+        self.M_test = len(self.X_test.iloc[:1])
+        
+        """
+        eliminando los valores NAN
+        """
+        self.X_train = self.nan_delete(self.X_train, self.M_train)
+        self.X_test = self.nan_delete(self.X_test, self.M_test)
+        self.Y_train = self.nan_delete(self.Y_train, self.M_train)
+        
+        #informacion
+        self.valeurs_interdis = [np.nan, np.inf, -np.inf]
 
     """
     con estza funcion espero reyenal los valores perdidos sin que estos afecten mucho 
     el equilibrio general
     """
 
-        
+
+   
         
  
         
@@ -82,13 +94,17 @@ class data_read():
                 self.idex_variables_int.append(i)
 
                 self.key_variables_int.append(x_config_label)
+
                 
                 try:
                     
                     self.X_train[x_config_label].astype(np.int)
                     
                 except ValueError:
-                    print(ValueError)
+                    
+                    if self.valeurs_interdis in self.X_train[x_config_label].isna():
+                    
+                        print("encontramos un valor inapropiado")
                     
                     
                 try:
@@ -96,7 +112,12 @@ class data_read():
                     self.X_test[x_config_label].astype(np.int)
                 
                 except ValueError:
-                    print(ValueError)
+                    
+                    if self.valeurs_interdis in self.X_test[x_config_label].isna():
+                        
+
+                    
+                        print("encontramos un valor inapropiado")
                 
 
                 
@@ -161,35 +182,52 @@ class data_read():
     en categoria ya nan es una categoria pero se deve remplasar
     por otra letra
     """
-    def nan_delete(self):
-        promedios = []
-        
-        
-        for j in range(0,len(self.variable)):
-            
-            
-            
-            if(self.idex_variables_int.__contains__(j)):
+    def nan_delete(self,_array,len_):
+
+        i = 0
+        for x_config_label in self.variable[0:79]:
+
+
+    
+            if self.tipo[i] == "int":     
                 
-                promedios, n = self.promedio_ar_qu_me(self.X.iloc[:,j])
-                random_value = self.random_(self.X.iloc[:,j], n)
+
+                mean = _array[x_config_label].mean()
                 
-                
-                for i in self.X.iloc[:,j]:
+                for n in range(0, len_):
                     
-                    if np.isnan(i):
+                    if _array.loc[n, x_config_label] == np.nan:
                         
-                        self.X[i,j] = (self.random_(promedios , 3) + random_value) / 2
+                        _array.loc[n, x_config_label] = mean
                         
                     
-            if(self.idex_variables_catagoricas.__contains__(j)):
+            if self.tipo[i] == "categoria":
+                count = 0
+                nan_true_array = _array.loc[:,x_config_label].isna()
                 
-                for i in self.X.iloc[:,j]:
+                index_nan_true_array = nan_true_array.index[nan_true_array].tolist()
+                print(index_nan_true_array)
+
+                        
                     
-                    if np.isnan(i):
-                        
-                        self.X[i,j] = "DEFAUT"
-                        
+                
+            i += 1 
+            
+        return _array
+
+    def nan_delete_1d(self,_array,len_):
+
+        mean = _array.mean()
+            
+        for i in range(0, len_):
+            
+            if _array[i] == np.nan:
+                
+               _array[i] = mean
+                
+        return _array       
+  
+    
     def delet_inconnu_value(self,array_):
 
         return array_.replace([np.inf, -np.inf], np.nan)
@@ -197,37 +235,13 @@ class data_read():
         
        
 
-    def promedio_ar_qu_me(self, array_):
-       array_, n = self.enleve_nan_values(array_)
-       
-       armonico = n / sum(np.reciprocal(array_))
-       quadratico = np.sqrt(n / sum(np.power(array_)))
-       media = sum(array_) / n
-       
-       return armonico, quadratico, media, n
 
-    def random_(self, array_ ,n):
+
+
         
-        return array_[random.randint(1,n)]
-        
-    def enleve_nan_values(self,array_):
-        
-        k = array_
-        n = 0
-        for i in array_:
-            n += 1
-            if np.isnan(i):
-                n -= 1
-                k.drop(i)
-        return k,n
+
     
-    #def catagorica_dummy_variables(self):
-        
-    #    labelencoder = LabelEncoder()
-        
-   #     for j in self.idex_variables_catagoricas:
-            
-  #          X[:, j] = labelencoder.fit_transform(X[:, j])
+
         
         
         
