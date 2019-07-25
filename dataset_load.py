@@ -12,7 +12,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 import statsmodels as st
 from sklearn.preprocessing import StandardScaler
-import random
+
 
 class data_read():
     
@@ -52,9 +52,9 @@ class data_read():
         """
         eliminando los valores NAN
         """
-        self.X_train = self.nan_delete(self.X_train, self.M_train)
-        self.X_test = self.nan_delete(self.X_test, self.M_test)
-        self.Y_train = self.nan_delete(self.Y_train, self.M_train)
+        self.X_train = self.nan_delete(self.X_train)
+        self.X_test = self.nan_delete(self.X_test)
+        self.Y_train = self.nan_delete_1d(self.Y_train)
         
         #informacion
         self.valeurs_interdis = [np.nan, np.inf, -np.inf]
@@ -102,9 +102,9 @@ class data_read():
                     
                 except ValueError:
                     
-                    if self.valeurs_interdis in self.X_train[x_config_label].isna():
+                    print("encontramos un valor inapropiado en : " + x_config_label)
                     
-                        print("encontramos un valor inapropiado")
+
                     
                     
                 try:
@@ -113,11 +113,8 @@ class data_read():
                 
                 except ValueError:
                     
-                    if self.valeurs_interdis in self.X_test[x_config_label].isna():
-                        
+                    print("encontramos un valor inapropiado en : " + x_config_label)
 
-                    
-                        print("encontramos un valor inapropiado")
                 
 
                 
@@ -125,16 +122,42 @@ class data_read():
             if self.tipo[i] == "float":
                 self.idex_variables_float.append(i)
                 self.key_variables_float.append(x_config_label)
-                self.X_train[x_config_label].astype(np.float)
-                self.X_test[x_config_label].astype(np.float)
+                
+                try:
+                    self.X_train[x_config_label].astype(np.float64)
+                    
+                except ValueError:
+                    
+                    print("encontramos un valor inapropiado en : " + x_config_label)
+   
+
+                try:
+                     self.X_test[x_config_label].astype(np.float64)
+                    
+                except ValueError:
+                    
+                    print("encontramos un valor inapropiado en : " + x_config_label)
                
 
             if self.tipo[i] == "categoria":
                 
                 self.idex_variables_catagoricas.append(i)
                 self.key_variables_catagoricas.append(x_config_label)
-                self.X_train[x_config_label].astype(str)
-                self.X_test[x_config_label].astype(str)
+               
+                try:
+                     self.X_train[x_config_label].astype(str)
+                    
+                except ValueError:
+                    
+                    print("encontramos un valor inapropiado en : " + x_config_label)
+                
+                
+                try:
+                     self.X_test[x_config_label].astype(str)
+                    
+                except ValueError:
+                    
+                    print("encontramos un valor inapropiado en : " + x_config_label)
                
             
             i += 1
@@ -149,13 +172,14 @@ class data_read():
 
 
         sc_X_normalise = StandardScaler()    
-        #self.X_train[( self.key_variables_float + self.key_variables_int )] = 
+
         sc_X_normalise.fit(self.X_train.loc[: , ( self.key_variables_float + self.key_variables_int )])
         self.X_train.loc[: , ( self.key_variables_float + self.key_variables_int )] = sc_X_normalise.transform(self.X_train.loc[:, ( self.key_variables_float + self.key_variables_int )])
         
-#        sc_X_normalise.fit(self.X_test.loc[: , ( self.key_variables_float + self.key_variables_int )])
-#        self.X_test.loc[( self.key_variables_float + self.key_variables_int )] = sc_X_normalise.transform(self.X_test.loc[ ( self.key_variables_float + self.key_variables_int )])
-        
+        sc_X_normalise.fit(self.X_test.loc[: , ( self.key_variables_float + self.key_variables_int )])
+        self.X_test.loc[: , ( self.key_variables_float + self.key_variables_int )] = sc_X_normalise.transform(self.X_test.loc[:, ( self.key_variables_float + self.key_variables_int )])
+
+      
         
         #y
         #sc_y_normalise = StandardScaler()
@@ -182,48 +206,73 @@ class data_read():
     en categoria ya nan es una categoria pero se deve remplasar
     por otra letra
     """
-    def nan_delete(self,_array,len_):
+    def nan_delete(self,_array):
 
         i = 0
         for x_config_label in self.variable[0:79]:
 
 
     
-            if self.tipo[i] == "int":     
+            if self.tipo[i] == "int" or self.tipo[i] == "float":     
                 
 
-                mean = _array[x_config_label].mean()
+                index_nan_true_array = self.search_nan(_array, x_config_label)
                 
-                for n in range(0, len_):
+                if  not(not index_nan_true_array):
                     
-                    if _array.loc[n, x_config_label] == np.nan:
-                        
-                        _array.loc[n, x_config_label] = mean
-                        
+                    mean = _array[x_config_label].mean()
                     
+                    for nan_index in index_nan_true_array:
+                    
+                        _array.loc[nan_index, x_config_label] = mean
+
+
             if self.tipo[i] == "categoria":
-                count = 0
-                nan_true_array = _array.loc[:,x_config_label].isna()
                 
-                index_nan_true_array = nan_true_array.index[nan_true_array].tolist()
-                print(index_nan_true_array)
-
-                        
+                
+                
+                index_nan_true_array = self.search_nan(_array, x_config_label)
+                
+                if not(not index_nan_true_array):
                     
-                
+                    for nan_index in index_nan_true_array:
+                    
+                        _array.loc[nan_index, x_config_label] = "defaut"
+
             i += 1 
             
         return _array
-
-    def nan_delete_1d(self,_array,len_):
-
-        mean = _array.mean()
+    
+    
+    def search_nan(self,_array, colunna_search):
+        
+        #retorna una serie pd con true donde estan los nan
+        nan_true_array = _array.loc[:,colunna_search].isna()
+        #retorna solamente el indixe de endonde estan los true     
+        index_nan_true_array = nan_true_array.index[nan_true_array].tolist()
+        
+        return index_nan_true_array
+         
             
-        for i in range(0, len_):
+
             
-            if _array[i] == np.nan:
+        
+        
+    def nan_delete_1d(self,_array):
+
+        #retorna una serie pd con true donde estan los nan
+        nan_true_array = _array.isna()
+        #retorna solamente el indixe de endonde estan los true     
+        index_nan_true_array = nan_true_array.index[nan_true_array].tolist()
+        
+        if  not(not index_nan_true_array):
+                    
+            mean = _array.mean()
+                    
+            for nan_index in index_nan_true_array:
+                    
+                _array.loc[nan_index] = mean
                 
-               _array[i] = mean
                 
         return _array       
   
