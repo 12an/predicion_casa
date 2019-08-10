@@ -7,10 +7,7 @@ Created on Wed May 15 22:20:52 2019
 
 # Importing the libraries
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder
-import statsmodels as st
 from sklearn.preprocessing import StandardScaler
 
 
