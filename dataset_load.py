@@ -33,6 +33,7 @@ class data_read():
         self.tipo  = self.organizacion.iloc[0:79 , 3]
 
         self.variable = self.organizacion.iloc[0:79 , 0]
+        self.clasfacion_medida = self.organizacion.iloc[0:79 , 4]
 
         self.dataset_train = pd.read_csv('datos/train.csv',encoding = "ISO-8859-1") #dtype se puede configurar para selecionar por columna el typo 
         self.dataset_test = pd.read_csv('datos/test.csv',encoding = "ISO-8859-1")
@@ -212,17 +213,22 @@ class data_read():
     
             if self.tipo[i] == "int" or self.tipo[i] == "float":     
                 
-
-                index_nan_true_array = self.search_nan(_array, x_config_label)
                 
-                if  not(not index_nan_true_array):
-                    
-                    mean = _array[x_config_label].mean()
-                    
-                    for nan_index in index_nan_true_array:
-                    
-                        _array.loc[nan_index, x_config_label] = mean
+                if  self.clasfacion_medida[i]=="numerico" or self.clasfacion_medida[i]=="count":
 
+                    index_nan_true_array = self.search_nan(_array, x_config_label)
+                
+                    if  not(not index_nan_true_array):
+                    
+                        mean = _array[x_config_label].mean()
+                    
+                        for nan_index in index_nan_true_array:
+                    
+                            _array.loc[nan_index, x_config_label] = mean
+                            
+                if self.clasfacion_medida[i]=="tiempo":
+                    rango_tiempo = 
+                    
 
             if self.tipo[i] == "categoria":
                 
@@ -290,19 +296,16 @@ class data_read():
 
         
         
+if __name__=="__main__":     
         
-        
-b = data_read()
+    b = data_read()
 
-y = b.Y_train
-xt = b.X_test
-xd = b.X_train
-b.definiendo_dato(1)
+    b.definiendo_dato(1)
 
-organiza = b.organizacion
-organiza1 = b.variable
-organiza2 = b.tipo
-b.normalizar_datos()
-ya = b.Y_train
-xa = b.X_train
+    organiza = b.organizacion
+    organiza1 = b.variable
+    organiza2 = b.tipo
+    b.normalizar_datos()
+    ya = b.Y_train
+    xa = b.X_train
 
