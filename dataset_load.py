@@ -161,7 +161,9 @@ class data_read():
             i += 1
             
 
-
+    def decadas_categorias(self):
+        
+        
         
         
     def normalizar_datos(self):
