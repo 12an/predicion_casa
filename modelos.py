@@ -72,19 +72,18 @@ x_test_base = datos.train_test_base(datos.encoder_categorias(datos.dataset_test)
 '''
 plot correlation matrix excluding all chategorical data
 '''
-def correlation_matrix():
-    global datos, x_train_base
-    no_chategorical_columns = datos.columns_variables_int + datos.columns_variables_float
-    dataset_no_categorical = x_train_base.loc[:, no_chategorical_columns]
-    correlacion_figura = plt.figure(figsize=(20, 20))
-    plt.matshow(dataset_no_categorical.corr(), fignum=correlacion_figura.number)
-    plt.xticks(range(dataset_no_categorical.select_dtypes(['number']).shape[1]),
+
+no_chategorical_columns = datos.columns_variables_int + datos.columns_variables_float
+dataset_no_categorical = x_train_base.loc[:, no_chategorical_columns]
+correlacion_figura = plt.figure(figsize=(20, 20))
+plt.matshow(dataset_no_categorical.corr(), fignum=correlacion_figura.number)
+plt.xticks(range(dataset_no_categorical.select_dtypes(['number']).shape[1]),
                dataset_no_categorical.select_dtypes(['number']).columns, fontsize=14, rotation=45)
-    plt.yticks(range(dataset_no_categorical.select_dtypes(['number']).shape[1]),
+plt.yticks(range(dataset_no_categorical.select_dtypes(['number']).shape[1]),
                dataset_no_categorical.select_dtypes(['number']).columns, fontsize=14)
-    cb = plt.colorbar()
-    cb.ax.tick_params(labelsize=14)
-    plt.title('Correlation Matrix', fontsize=20);
+cb = plt.colorbar()
+cb.ax.tick_params(labelsize=14)
+plt.title('Correlation Matrix', fontsize=20);
 
 
 '''
@@ -123,8 +122,3 @@ y_training = x_train_base.loc[:,"SalePrice"]
 X_train, X_test, y_train, y_test = train_test_split(x_training_no_categrical,
                                                     y_training, 
                                                     test_size=0.33, random_state=52)
-
-'''
-for column in dataset_no_categorical.columns:
-    mean = x_training.loc[:, column]
-    '''

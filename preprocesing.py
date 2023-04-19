@@ -16,13 +16,14 @@ class PreProcesing(data_read):
 
     def __init__(self, **args):
         data_read.__init__(self, **args)
-        self.encoded = OneHotEncoder(drop='first')
+        self.encoded = OrdinalEncoder()
 
     def encoder_categorias(self, dataset):
         dataset = dataset.copy(deep=True)
         self.encoded.fit(dataset.loc[:,  self.columns_variables_catagoricas ])
-        encoded_values = self.encoded.fit_transform(dataset.loc[:,  self.columns_variables_catagoricas ])
-        dataset.loc[:, self.columns_variables_catagoricas ] = encoded_values
+        encoded_values = self.encoded.set_params(encoded_missing_value=-1).fit_transform(dataset.loc[:,  self.columns_variables_catagoricas])
+        
+        dataset.loc[:,  self.columns_variables_catagoricas] = encoded_values
         return dataset
 
     '''
