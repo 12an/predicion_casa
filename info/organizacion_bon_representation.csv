@@ -6,17 +6,17 @@ LotFrontage,pies lineales de calle conectados a la propiedad.,ancho del frente,f
 LotShape,forma general de propiedad,distribucion del edificio,categoria,ordinal,,muchas veces estas casas tienen una buena adaptabilidad en el terreno sin causar mucho impacto a la comodidad,1,
 RoofStyle,Tipo de techo,dise;o del techo,categoria,nominal,,"el techo cuenta, en invierno lluvia, calor en cada temporada si se tiene un techo de calidad se puede pasar bien comodo, pero no vale mucho",3,
 BsmtQual,eval£a la altura del s¢tano,,categoria,ordinal,,"mas espacio para organizar cosas a largo plazo, mui diferente a history",9,
-MoSold,Mes vendido (MM),,int,tiempo,,"presenta mui poca informacion pero junto al a;o vendido y en comparacion con las otras casas nos podemos dar cuenta de vulvujas financienras antes y despues de su esplotacion, pero dudo que estos datos presenten esa informacion. Pero mientras mas cerca o estan en la misma decada uno puede decir que los datos no estan afectados por la crisis.",1,Otras
-YrSold,a¤o vendido (YYYY),,int,tiempo,,"presenta mui poca informacion pero junto al a;o vendido y en comparacion con las otras casas nos podemos dar cuenta de vulvujas financienras antes y despues de su esplotacion, pero dudo que estos datos presenten esa informacion. Pero mientras mas cerca o estan en la misma decada uno puede decir que los datos no estan afectados por la crisis.",1,Observaciones
+MoSold,Mes vendido (MM),,categoria,tiempo,,"presenta mui poca informacion pero junto al a;o vendido y en comparacion con las otras casas nos podemos dar cuenta de vulvujas financienras antes y despues de su esplotacion, pero dudo que estos datos presenten esa informacion. Pero mientras mas cerca o estan en la misma decada uno puede decir que los datos no estan afectados por la crisis.",1,Otras
+YrSold,a¤o vendido (YYYY),,categoria,tiempo,,"presenta mui poca informacion pero junto al a;o vendido y en comparacion con las otras casas nos podemos dar cuenta de vulvujas financienras antes y despues de su esplotacion, pero dudo que estos datos presenten esa informacion. Pero mientras mas cerca o estan en la misma decada uno puede decir que los datos no estan afectados por la crisis.",1,Observaciones
 SaleType,Tipo de venta,,categoria,nominal,,estos nos representa un poco el riesgo o desafio que la persona compradora de la casa evaluando que la encontro justo,4,
 SaleCondition,Condici¢n de venta,,categoria,ordinal,,estos nos representa un poco el riesgo o desafio que la persona compradora de la casa evaluando que la encontro justo,4,
 OverallQual,Califica el material general y el acabado de la casa.,material de construccion,categoria,ordinal,,"cuando la calidad es mui alta esperamos una casa destinada a personas ricas, pero si es pobre o pasa de cierto umbrar la calidad no influira mucho en la decicion de la persona",6,
 OverallCond,Valora el estado general de la casa.,estado observado,categoria,ordinal,,"buena bariable resume mas de la mitad el precio de una casa, refleja directamente la capacidad economica de la persona, a menos que maquillen la casa",10,
-YearBuilt,fecha de construcci¢n original,k tan antigua es la casa,int,tiempo,,"no necesaria mente tiene k valer poco si es mui antigua si se esta construida con materiales de calidad, dependiendo si tyiene un gran precio pueda k no se tome mucho en cuenta",5,
-YearRemodAdd,fecha de remodelaci¢n ,si se ha remodelado,int,tiempo,,"si no es mui antiguo y ya tiene varias o una remodelacion puede indicar que hicieron una mala construccion, pero las casas viejas si se le hacen remodelaciones, cosa k no influye mucho en el precio",3,
+YearBuilt,fecha de construcci¢n original,k tan antigua es la casa,categoria,tiempo,,"no necesaria mente tiene k valer poco si es mui antigua si se esta construida con materiales de calidad, dependiendo si tyiene un gran precio pueda k no se tome mucho en cuenta",5,
+YearRemodAdd,fecha de remodelaci¢n ,si se ha remodelado,categoria,tiempo,,"si no es mui antiguo y ya tiene varias o una remodelacion puede indicar que hicieron una mala construccion, pero las casas viejas si se le hacen remodelaciones, cosa k no influye mucho en el precio",3,
 Functional,Funcionalidad del hogar (suponga que es t¡pico a menos que se justifiquen las deducciones), ,categoria,ordinal,,resumen mui importante para toda la casa,10,Estado
 Electrical,Sistema el‚ctrico.,,categoria,ordinal,,"es mui peligroso tener un sistema electrico anticuado o mui defectuoso, esto indica k es una de las principales prioridades a reparar",9,
-GarageYrBlt,a¤o de construcci¢n del garaje.,,float,tiempo,,no mui importante,3,
+GarageYrBlt,a¤o de construcci¢n del garaje.,,categoria,tiempo,,no mui importante,3,
 GarageCond,Estado del garaje,,categoria,ordinal,"true,ojo",,6,
 ExterCond,eval£a la condici¢n actual del material en el exterior,si se ve en mal estado,categoria,ordinal,,"si esta en mala condiciones baja un poco el precio pues habra k reinvertir para remodelarla, si el material es de alta calida tambien suve un poco el precio",8,
 BsmtCond,eval£a el estado general del s¢tano,,categoria,ordinal,,casi no influye mucho pues en los zotano se gualdan cosas a lon terme mais aussi si il n'y a pas de cours en arriere,5.8,
@@ -62,7 +62,7 @@ GrLivArea,pies cuadrados sobre el nivel del suelo (superficie),,float,numerico,,
 GarageArea,Tama¤o del garaje en pies cuadrados.,,float,numerico,,,9,
 PoolArea, rea de la piscina en pies cuadrados,,float,numerico,,"influye mucho en el precio, si es grande asta si es peque;a",10,
 MiscFeature,caracter¡stica miscel nea no cubierta en otras categor¡as, ,categoria,nominal,TRUE,gran influencia para todas las edades,10,
-MiscVal,$ Valor de la caracter¡stica miscel nea,,,numerico,,,,Comodidad
+MiscVal,$ Valor de la caracter¡stica miscel nea,,float,numerico,,,,Comodidad
 BsmtFinSF1,Tipo 1 terminado pies cuadrados ,sotano,float,numerico,,"modifica el valor de un sotano bueno, para poder dedicarlo a otras funciones",8,
 BsmtFinSF2, Tipo 2 terminado pies cuadrados,sotano,float,numerico,,"modifica el valor de un sotano bueno, para poder dedicarlo a otras funciones",8,
 BsmtUnfSF,pies cuadrados sin terminar del  rea del s¢tano,,float,numerico,,resumen de las dos pautas anteriores,10,
@@ -78,7 +78,3 @@ ScreenPorch,Pantalla del  rea del porche en pies cuadrados.,,float,numerico,,,8,
 Fireplaces,N£mero de chimeneas,,int,count,,existe una gran correlacion entre el calentador y las chimeneas,7,
 CentralAir,aire acondicionado central.,,categoria,binario,,"aumenta el costo en gran medida, es mas estetico razon de k es importante",9,
 KitchenAbvGr,cocinas por encima del nivel,cocinas,int,count,,"no importa mucho, con una basta",3,
-,,,,,,,,
-,,,,,,,,
-Nota:,,,,,,,,
-este documento esta basado en La tipología de Chrisman ,,,,,,,,

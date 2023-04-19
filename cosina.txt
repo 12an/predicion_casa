@@ -1,2 +1,0 @@
-Kitchen	Cocinas sobre rasante.		int	las cosinas agregan valor y mas cuando sera dedicad a una casa familiar	10	
-											
